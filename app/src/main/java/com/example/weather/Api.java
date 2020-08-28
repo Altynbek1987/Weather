@@ -1,6 +1,7 @@
 package com.example.weather;
 
 import com.example.weather.data.WeatherData;
+import com.example.weather.save.Config;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -12,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface Api {
 
-    static String DOMAIN = "http://api.openweathermap.org/";
+    static String DOMAIN = Config.BASE_URL;
 
     @GET("data/2.5/weather")
 
@@ -21,12 +22,10 @@ public interface Api {
     class Instance{
         private static Retrofit getRetrofit(){
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-
             Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
             retrofitBuilder.baseUrl(DOMAIN);
             retrofitBuilder.addConverterFactory(GsonConverterFactory.create());
             retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
-
             retrofitBuilder.client(okHttpClientBuilder.build());
 
             return retrofitBuilder.build();
